@@ -1,0 +1,82 @@
+
+# csp.run // Jon Lee
+# 
+
+reset;
+
+option solver cplex;
+
+option solution_round 6;
+option solver_msg 0;
+
+model csp.mod;
+#data csp.dat;
+read W,m,{i in 1..m} (w[i],d[i]) < csp.dat;
+
+problem Cutting_Opt: RollsUsed, FillDemand, X;
+   option relax_integrality 1;
+   option presolve 0;
+
+problem Pattern_Gen: Reduced_Cost, Width_Limit, Use;
+   option relax_integrality 0;
+   option presolve 1;
+
+let nPAT := 0;
+
+for {i in WIDTHS} {
+   let nPAT := nPAT + 1;
+   let A[i,nPAT] := floor (W/w[i]);
+   let {i2 in WIDTHS: i2 <> i} A[i2,nPAT] := 0;
+   };
+
+repeat {
+   solve Cutting_Opt > crap;
+   let {i in WIDTHS} price[i] := FillDemand[i].dual;
+   solve Pattern_Gen > crap;
+   printf "\nImproving column generated. Reduced cost = %11.2e  ", Reduced_Cost;
+   if Reduced_Cost < -0.00001 then {
+      let nPAT := nPAT + 1;
+      let {i in WIDTHS} A[i,nPAT] := Use[i];
+      }
+   else break;
+};
+
+print " "; print "LP solved! Solution: "; print " ";
+display X;
+display RollsUsed;
+printf "\nLower bound = %11i  (LP obj value rounded up) \n\n", ceil(RollsUsed);
+
+
+let {j in PATTERNS} X[j] := ceil(X[j]); # round up
+
+printf "\n\n\nSolution rounded up to integers: %3i rolls\n\n", sum {j in PATTERNS} X[j];
+
+for {j in PATTERNS : X[j]>0} {
+printf "CUT %4i OF:\n", X[j];
+for {i in WIDTHS} {
+   printf "%3i  ", i;
+   printf "%4i", A[i,j];
+   printf "\n";
+   }
+printf "\n\n";
+};
+
+# Try to use integer-linear optimization to get a better solution
+
+option Cutting_Opt.relax_integrality 0;
+option Cutting_Opt.presolve 10;
+solve Cutting_Opt;
+
+printf "\n\nBest integer solution considering all patterns
+   generated:\n"; # %3i rolls", sum {j in PATTERNS} X[j];
+display RollsUsed; print " ";
+
+for {j in PATTERNS : X[j]>0} {
+printf "CUT %4i OF:\n", X[j];
+for {i in WIDTHS} {
+   printf "%3i  ", i;
+   printf "%4i", A[i,j];
+   printf "\n";
+   }
+printf "\n\n";
+};

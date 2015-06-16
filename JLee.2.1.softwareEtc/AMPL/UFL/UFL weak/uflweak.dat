@@ -1,0 +1,10 @@
+# uflweak.dat // Jon Lee
+# 
+
+param M := 10;  # NUMBER OF FACILITIES
+
+param N := 25;  # NUMBER OF CUSTOMERS
+
+
+
+

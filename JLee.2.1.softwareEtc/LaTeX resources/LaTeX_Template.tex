@@ -1,0 +1,168 @@
+
+%  LaTeX_Template.tex // J. Lee
+%
+% ----------------------------------------------------------------
+% AMS-LaTeX ************************************************ 
+% **** -----------------------------------------------------------
+\documentclass{amsart}
+\usepackage{graphicx,amsmath,amsthm}
+\usepackage{hyperref}
+\usepackage{verbatim}
+\usepackage[a4paper,text={16.5cm,25.2cm},centering]{geometry}
+% ----------------------------------------------------------------
+\vfuzz2pt % Don't report over-full v-boxes if over-edge is small
+\hfuzz2pt % Don't report over-full h-boxes if over-edge is small
+% THEOREMS -------------------------------------------------------
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{prop}[thm]{Proposition}
+\theoremstyle{definition}
+\newtheorem{defn}[thm]{Definition}
+\theoremstyle{remark}
+\newtheorem{rem}[thm]{Remark}
+\numberwithin{equation}{section}
+% MATH -----------------------------------------------------------
+\newcommand{\Real}{\mathbb R}
+\newcommand{\eps}{\varepsilon}
+\newcommand{\To}{\longrightarrow}
+\newcommand{\BX}{\mathbf{B}(X)}
+\newcommand{\A}{\mathcal{A}}
+% ----------------------------------------------------------------
+\begin{document}
+
+\title{\LaTeX~ Template}
+
+\date{\today}
+
+\maketitle
+
+ \href{mailto:youruniqname@umich.edu,yourfrienduniqname@umich.edu,anotheruniqname@umich.edu}
+{Your Actual Name (youruniqname@umich.edu), 
+Your Friend's Actual Name (yourfrienduniqname@umich.edu), 
+Another Actual Name (anotheruniqname@umich.edu)}
+
+\medskip
+
+(this identifies your work and it \emph{greatly} help's me in returning homework to you by email
+---- just plug in the appropriate replacements in the \LaTeX~ source; then when I click on the 
+hyperlink above, my email program opens up starting a message to you)
+
+\bigskip
+
+% ----------------------------------------------------------------
+
+This template can serve as a starting point for learning \LaTeX. Download MiKTeX from
+{\tt miktex.org}
+to get started. Look at the source file for this
+document (in Section \ref{sec:appendix})
+to see how to get all of the effects demonstrated.
+
+\section{This is the first section where we make some lists}
+
+It is easy to make enumerated lists:
+\begin{enumerate}
+\item This is the first item
+\item Here is the second
+\end{enumerate}
+
+And even enumerated sublists:
+\begin{enumerate}
+\item This is the first item
+\item Here is the second with a sublist
+\begin{enumerate}
+\item first sublist item
+\item and here is the second
+\end{enumerate}
+\end{enumerate}
+
+\section{Here is a second section where we typeset some math}
+
+You can typeset math inline, like $\sum_{j=1}^n a_{ij} x_j$, by just enclosing the math in dollar signs.
+
+But if you want to \emph{display} the math, then you do it like this:
+
+\[
+\sum_{j=1}^n a_{ij} x_j~ \forall~ i=1,\ldots,m.
+\]
+
+And here is a matrix:
+\[
+\left(
+  \begin{array}{ccccc}
+    1 & \pi & 2& \frac{1}{2} & \nu \\
+    6.2 & r & 2 & 4 & 5 \\
+    |y'| & \mathcal{R} & \mathbb{R} & \underbar{r} & \hat{R} \\
+  \end{array}
+\right)
+\]
+
+Here is an equation array, with the equal signs nicely aligned:
+\begin{eqnarray}
+  \sum_{j=1}^n x_j &=& 5 \label{E1} \\
+    \sum_{j=1}^n y_j &=& 7 \label{E7} \\
+  \sum_{j\in S} x_j &=& 29 \label{E4}
+\end{eqnarray}
+
+The equations are automatically numbered, like $x.y$, where
+$x$ is the section number and $y$ is the $y$-th equation in section $x$.
+By tagging the equations
+with labels, we can refer to them later, like (\ref{E4}) and (\ref{E1}).
+
+\begin{thm}\label{Favorite}
+This is my favorite Theorem.
+\end{thm}
+\begin{proof}
+Unfortunately, the space here does not allow for including my ingenious proof
+of Theorem \ref{Favorite}.
+\end{proof}
+
+\section{Here is how I typset a standard-form linear-optimization problem}
+
+\[
+\tag{P}
+\begin{array}{rrcl}
+ \min & c'x  &      &   \\
+      &  Ax  &   =  & b~; \\
+      &   x  & \geq & \mathbf{0}~.
+\end{array}
+\]
+
+Notice that in this example, there are 4 columns separated by 3 \&'s.
+The 'rrcl' organizes justification within a column.
+Of course, one can make more columns.
+
+\section{Graphics}
+
+This is how to include and refer to Figure \ref{nameoffigure} with pdfLaTeX.
+
+\begin{figure}[h!!]
+\includegraphics[width=0.5\textwidth]{yinyang.jpg}
+\caption{Another duality}\label{nameoffigure}
+\end{figure}
+
+\section{The \LaTeX~ commands to produce this document}
+\label{sec:appendix}
+
+Look at the \LaTeX~ commands in this section to see how each of the elements 
+of this document was produced. Also, this section serves to show
+how text files (e.g., programs) can be included in a \LaTeX~ document verbatim.
+
+\bigskip
+
+\hrule
+
+\small
+\verbatiminput{LaTeX_Template.tex}
+\normalsize
+
+\hrule
+
+\bigskip
+
+% ----------------------------------------------------------------
+
+\end{document}
+% ----------------------------------------------------------------
+
+

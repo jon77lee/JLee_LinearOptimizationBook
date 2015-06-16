@@ -1,0 +1,16 @@
+# uflstrong.run // Jon Lee
+# 
+
+reset; 
+option randseed 412837;
+option display_1col 0;
+option display_transpose -20;
+option show_stats 1;
+option solver cplex;
+model uflstrong.mod; 
+data uflstrong.dat; 
+solve;
+display W;
+display Y;
+display Total_Cost;
+
